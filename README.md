@@ -24,6 +24,12 @@ Due to the way this mod is coded, it works with all modded villagers by default 
 2. Place the downloaded mod file into the `mods` folder of your Minecraft server.
 3. Restart the server to apply the changes.
 
+### Fabric for Minecraft 26.3
+
+Download the Fabric 26.3 build from [this fork's releases](https://github.com/vvcDaDa/Villager-Pickup-Mod/releases). It requires Fabric Loader 0.19.5 and Fabric API 0.161.0+26.3.
+
+This port was contributed by [vvcDaDa](https://github.com/vvcDaDa) with assistance from Codex. The original author and maintainer credits remain in the mod metadata.
+
 ## Configuration
 
 Is there something you want to change about the mod? 
