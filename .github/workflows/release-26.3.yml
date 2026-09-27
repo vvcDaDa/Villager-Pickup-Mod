@@ -1,0 +1,47 @@
+name: Release Minecraft 26.3
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - RELEASE_NOTES_26_3_COMBINED.md
+      - .github/workflows/release-26.3.yml
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: github.repository == 'vvcDaDa/Villager-Pickup-Mod'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Setup Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - name: Build Fabric and NeoForge 26.3
+        run: |
+          chmod +x ./gradlew
+          ./gradlew clean :fabric:build :neoforge:build -Pminecraft=26.3
+
+      - name: Publish combined release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mapfile -t fabric_jars < <(find fabric/build/libs -maxdepth 1 -type f -name '*.jar' ! -name '*-dev.jar' ! -name '*-sources.jar' | sort)
+          mapfile -t neoforge_jars < <(find neoforge/build/libs -maxdepth 1 -type f -name '*.jar' ! -name '*-dev.jar' ! -name '*-sources.jar' | sort)
+          if [ "${#fabric_jars[@]}" -ne 1 ] || [ "${#neoforge_jars[@]}" -ne 1 ]; then
+            printf 'Expected one JAR per loader; found Fabric=%s NeoForge=%s\n' "${#fabric_jars[@]}" "${#neoforge_jars[@]}"
+            exit 1
+          fi
+          gh release create v1.4-26.3 "${fabric_jars[0]}" "${neoforge_jars[0]}" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title 'Villager Pickup 1.4 (Minecraft 26.3: Fabric and NeoForge)' \
+            --notes-file RELEASE_NOTES_26_3_COMBINED.md
