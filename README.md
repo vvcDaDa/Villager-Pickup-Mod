@@ -30,6 +30,10 @@ Download the Fabric 26.3 build from [this fork's releases](https://github.com/vv
 
 This port was contributed by [vvcDaDa](https://github.com/vvcDaDa) with assistance from [Codex](https://github.com/codex). The original author and maintainer credits remain in the mod metadata.
 
+### NeoForge for Minecraft 26.3
+
+Download the NeoForge 26.3 build from [this fork's NeoForge release](https://github.com/vvcDaDa/Villager-Pickup-Mod/releases/tag/v1.4-neoforge-26.3). It requires NeoForge 26.3.0.23-beta or newer for Minecraft 26.3. The mod remains server-side.
+
 ## Configuration
 
 Is there something you want to change about the mod? 
