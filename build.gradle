@@ -4,11 +4,7 @@ plugins {
     // see https://projects.neoforged.net/neoforged/moddevgradle for new versions
     id 'net.neoforged.moddev' version '2.0.144' apply false
     // see https://github.com/PacifistMC/Forgix/releases for new versions
-    id 'io.github.pacifistmc.forgix' version '2.0.0'
-}
-
-forgix {
-    autoRun = true // Merges Loaders, NOT versions
+    id 'io.github.pacifistmc.forgix' version '2.0.0' apply false
 }
 
 import java.util.Properties
@@ -22,6 +18,13 @@ def selectedMinecraft = providers.gradleProperty('minecraft')
 
 if (!selectedMinecraft) {
     throw new GradleException('No Minecraft target selected.')
+}
+
+if (selectedMinecraft != '26.3') {
+    apply plugin: 'io.github.pacifistmc.forgix'
+    forgix {
+        autoRun = true // Merges Loaders, NOT versions
+    }
 }
 
 ext.minecraft = selectedMinecraft

@@ -48,4 +48,6 @@ plugins {
 rootProject.name = 'Villager-Pickup-Mod'
 include('common')
 include('fabric')
-include('neoforge')
+if (providers.gradleProperty('minecraft').orElse('26.1').get().trim() != '26.3') {
+    include('neoforge')
+}

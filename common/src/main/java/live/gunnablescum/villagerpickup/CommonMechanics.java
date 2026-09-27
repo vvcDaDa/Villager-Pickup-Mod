@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.TagValueOutput;
 #if MC_26_1
 import net.minecraft.world.entity.EntityType;
-#elif MC_26_2
+#elif MC_26_2 || MC_26_3
 import net.minecraft.world.entity.EntityTypes;
 #endif
 
@@ -36,7 +36,7 @@ public class CommonMechanics {
 
         #if MC_26_1
         if(entity.getType() != EntityType.VILLAGER) return InteractionResult.PASS; // Don't do anything if it's not a villager.
-        #elif MC_26_2
+        #elif MC_26_2 || MC_26_3
         if(entity.getType() != EntityTypes.VILLAGER) return InteractionResult.PASS; // Don't do anything if it's not a villager.
         #endif
 
@@ -70,7 +70,7 @@ public class CommonMechanics {
         #if MC_26_1
         nbt.putString("id", EntityType.VILLAGER.getDescriptionId());
         Optional<Holder<Item>> spawnEgg = SpawnEggItem.byId(EntityType.VILLAGER);
-        #elif MC_26_2
+        #elif MC_26_2 || MC_26_3
         nbt.putString("id", EntityTypes.VILLAGER.getDescriptionId());
         Optional<Holder<Item>> spawnEgg = SpawnEggItem.byId(EntityTypes.VILLAGER);
         #endif
@@ -84,7 +84,7 @@ public class CommonMechanics {
         DataComponentPatch.Builder changes = DataComponentPatch.builder()
                 #if MC_26_1
                 .set(DataComponents.ENTITY_DATA, TypedEntityData.of(EntityType.VILLAGER, nbt.buildResult()))
-                #elif MC_26_2
+                #elif MC_26_2 || MC_26_3
                         .set(DataComponents.ENTITY_DATA, TypedEntityData.of(EntityTypes.VILLAGER, nbt.buildResult()))
                 #endif
                 .set(DataComponents.LORE, loreData);

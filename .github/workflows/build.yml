@@ -2,6 +2,9 @@ name: Build Mod from Source
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - fabric-26.3
   pull_request:
     branches:
       - main
@@ -14,7 +17,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        minecraft: ['26.1', '26.2']
+        include:
+          - minecraft: '26.1'
+            task: build
+            artifact: build/forgix
+          - minecraft: '26.2'
+            task: build
+            artifact: build/forgix
+          - minecraft: '26.3'
+            task: :fabric:build
+            artifact: fabric/build/libs
     steps:
       - name: Check Environment Variables
         run: env
@@ -35,10 +47,10 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build (${{ matrix.minecraft }})
-        run: ./gradlew clean build -Pminecraft=${{ matrix.minecraft }}
+        run: ./gradlew clean ${{ matrix.task }} -Pminecraft=${{ matrix.minecraft }}
 
       - name: Upload Artifact (${{ matrix.minecraft }})
         uses: actions/upload-artifact@v7
         with:
           name: Villager-Pickup-Mod-${{ matrix.minecraft }}
-          path: build/forgix
+          path: ${{ matrix.artifact }}
