@@ -1,0 +1,33 @@
+name: Build Fabric 26.3
+
+on:
+  push:
+    branches:
+      - fabric-26.3
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Setup Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - name: Build Fabric 26.3
+        run: |
+          chmod +x ./gradlew
+          ./gradlew clean :fabric:build -Pminecraft=26.3
+
+      - name: Upload Fabric JARs
+        uses: actions/upload-artifact@v7
+        with:
+          name: Villager-Pickup-Fabric-26.3
+          path: fabric/build/libs/*.jar
