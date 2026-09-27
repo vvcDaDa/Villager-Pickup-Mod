@@ -5,6 +5,9 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.ProblemReporter;
+#if MC_26_3
+import net.minecraft.util.Prediction;
+#endif
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -49,7 +52,11 @@ public class CommonMechanics {
         if(spawnEgg == null) return InteractionResult.PASS; // There isn't a Villager Spawn Egg sometimes for some reason.
 
         if(player.getInventory().getFreeSlot() != 1) player.getInventory().add(spawnEgg);
+        #if MC_26_3
+        else player.drop(spawnEgg, true, Prediction.SERVER_ONLY);
+        #else
         else player.drop(spawnEgg, true);
+        #endif
         return InteractionResult.SUCCESS;
     }
 
