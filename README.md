@@ -24,15 +24,11 @@ Due to the way this mod is coded, it works with all modded villagers by default 
 2. Place the downloaded mod file into the `mods` folder of your Minecraft server.
 3. Restart the server to apply the changes.
 
-### Fabric for Minecraft 26.3
+### Updated to 26.3
 
-Download the Fabric 26.3 JAR from [the combined 26.3 release](https://github.com/vvcDaDa/Villager-Pickup-Mod/releases/tag/v1.4-26.3). It requires Fabric Loader 0.19.5 and Fabric API 0.161.0+26.3.
+Download the Fabric and NeoForge 26.3 JAR from [the combined 26.3 release](https://github.com/vvcDaDa/Villager-Pickup-Mod/releases/tag/v1.4-26.3).
 
 This port was contributed by [vvcDaDa](https://github.com/vvcDaDa) with assistance from [Codex](https://github.com/codex). The original author and maintainer credits remain in the mod metadata.
-
-### NeoForge for Minecraft 26.3
-
-Download the NeoForge 26.3 JAR from [the combined 26.3 release](https://github.com/vvcDaDa/Villager-Pickup-Mod/releases/tag/v1.4-26.3). It requires NeoForge 26.3.0.23-beta or newer for Minecraft 26.3. The mod remains server-side.
 
 ## Configuration
 
