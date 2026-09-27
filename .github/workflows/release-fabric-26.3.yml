@@ -1,0 +1,47 @@
+name: Release Fabric 26.3
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - RELEASE_NOTES_26_3.md
+      - .github/workflows/release-fabric-26.3.yml
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: github.repository == 'vvcDaDa/Villager-Pickup-Mod'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Setup Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - name: Build Fabric 26.3
+        run: |
+          chmod +x ./gradlew
+          ./gradlew clean :fabric:build -Pminecraft=26.3
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mapfile -t jars < <(find fabric/build/libs -maxdepth 1 -type f -name '*.jar' ! -name '*-dev.jar' ! -name '*-sources.jar' | sort)
+          if [ "${#jars[@]}" -ne 1 ]; then
+            printf 'Expected one distributable Fabric JAR; found %s\n' "${#jars[@]}"
+            exit 1
+          fi
+          gh release create v1.4-fabric-26.3 "${jars[0]}" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title 'Villager Pickup 1.4 (Fabric 26.3)' \
+            --notes-file RELEASE_NOTES_26_3.md
+
